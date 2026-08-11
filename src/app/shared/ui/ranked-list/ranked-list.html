@@ -1,0 +1,9 @@
+<div class="ranked-list">
+  @for (item of items(); track item.label) {
+    <div class="ranked-list__row">
+      <span class="ranked-list__dot"></span>
+      <span class="ranked-list__label">{{ item.label }}</span>
+      <span class="ranked-list__value">{{ item.value }}%</span>
+    </div>
+  }
+</div>

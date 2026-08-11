@@ -1,0 +1,42 @@
+<div class="pagination">
+  <div class="pagination__summary">
+    <span>Showing</span>
+    <select class="pagination__select" [value]="page()" (change)="onSelectChange($event)">
+      @for (p of pageOptions(); track p) {
+        <option [value]="p">{{ p }}</option>
+      }
+    </select>
+    <span>out of {{ pageCount() }}</span>
+  </div>
+
+  <div class="pagination__controls">
+    <button type="button" class="pagination__nav" [disabled]="page() === 1" (click)="goTo(page() - 1)">
+      <ui-icon name="chevron-left" [size]="14" />
+      <span>Previous</span>
+    </button>
+
+    <div class="pagination__pages">
+      @for (p of pages(); track $index) {
+        @if (p === 'ellipsis') {
+          <span class="pagination__ellipsis">&hellip;</span>
+        } @else {
+          <button
+            type="button"
+            class="pagination__page"
+            [class.pagination__page--active]="p === page()"
+            (click)="goTo(p)"
+          >
+            {{ p }}
+          </button>
+        }
+      }
+    </div>
+
+    <button type="button" class="pagination__nav" [disabled]="page() === pageCount()" (click)="goTo(page() + 1)">
+      <span>Next</span>
+      <span class="pagination__nav-icon--next">
+        <ui-icon name="chevron-left" [size]="14" />
+      </span>
+    </button>
+  </div>
+</div>
