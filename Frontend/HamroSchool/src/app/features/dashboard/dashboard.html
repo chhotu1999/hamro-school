@@ -1,0 +1,48 @@
+<app-layout title="Dashboard">
+  <button type="button" class="period-btn" layoutActions>
+    <ui-icon name="calendar" [size]="15" />
+    <span>This month</span>
+  </button>
+
+  <div class="dashboard-grid">
+    @for (stat of statCards; track stat.label) {
+      <ui-stat-card [icon]="stat.icon" [label]="stat.label" [value]="stat.value" [delta]="stat.delta" />
+    }
+    <div class="add-data">
+      <button type="button" class="add-data__btn">
+        <ui-icon name="plus" [size]="16" />
+        <span>Add data</span>
+      </button>
+    </div>
+  </div>
+
+  <ui-card class="chart-card">
+    <div class="chart-card__header">
+      <h2>Fee collection trend</h2>
+      <div class="chart-card__legend">
+        <span class="legend-item"><span class="legend-dot" style="background: var(--chart-blue)"></span>Collected</span>
+        <span class="legend-item"><span class="legend-dot" style="background: var(--chart-orange)"></span>Target</span>
+      </div>
+    </div>
+    <ui-bar-chart [categories]="barCategories" [series]="barSeries" [valueFormatter]="formatCurrency" />
+  </ui-card>
+
+  <div class="split-grid">
+    <ui-card>
+      <h2 class="section-title">Students by grade</h2>
+      <ui-donut-chart [data]="donutData" />
+    </ui-card>
+
+    <ui-card>
+      <h2 class="section-title">Attendance by section</h2>
+      <ui-ranked-list [items]="pagedAttendanceItems()" />
+      <div class="attendance-pagination">
+        <ui-pagination
+          [page]="attendancePage()"
+          [pageCount]="attendancePageCount()"
+          (pageChange)="onAttendancePageChange($event)"
+        />
+      </div>
+    </ui-card>
+  </div>
+</app-layout>

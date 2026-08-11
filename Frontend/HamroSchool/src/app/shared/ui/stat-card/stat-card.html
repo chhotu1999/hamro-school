@@ -1,0 +1,17 @@
+<ui-card>
+  <div class="stat">
+    <div class="stat__label">
+      <ui-icon [name]="icon()" [size]="16" />
+      <span>{{ label() }}</span>
+    </div>
+    <div class="stat__row">
+      <span class="stat__value">{{ value() }}</span>
+      @if (delta() !== null) {
+        <span class="stat__delta" [class.stat__delta--negative]="!isPositive()">
+          <ui-icon [name]="isPositive() ? 'arrow-up-right' : 'arrow-down-right'" [size]="13" />
+          {{ deltaAbs() }}%
+        </span>
+      }
+    </div>
+  </div>
+</ui-card>

@@ -1,0 +1,15 @@
+<div class="donut">
+  <div class="donut__ring" [style.background]="gradient()">
+    <div class="donut__hole"></div>
+  </div>
+
+  <div class="donut__legend">
+    @for (s of segments(); track s.label) {
+      <div class="donut__item">
+        <span class="donut__dot" [style.background]="s.color"></span>
+        <span class="donut__label">{{ s.label }}</span>
+        <span class="donut__value">{{ s.pct | number: '1.0-0' }}%</span>
+      </div>
+    }
+  </div>
+</div>

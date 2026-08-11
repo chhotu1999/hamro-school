@@ -1,0 +1,97 @@
+:host {
+  display: block;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.pagination__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.pagination__select {
+  appearance: none;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--color-text);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.pagination__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pagination__nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 7px 12px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.pagination__nav:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.pagination__nav-icon--next {
+  display: flex;
+  transform: rotate(180deg);
+}
+
+.pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pagination__page {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination__page:hover {
+  background: var(--color-surface-alt);
+}
+
+.pagination__page--active {
+  background: var(--color-accent-bg);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.pagination__ellipsis {
+  width: 32px;
+  text-align: center;
+  color: var(--color-text-faint);
+  font-size: 13px;
+}
