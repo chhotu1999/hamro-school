@@ -23,6 +23,45 @@
   gap: var(--space-3);
 }
 
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 4px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.switch {
+  width: 34px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  background: var(--color-border);
+  position: relative;
+  display: block;
+  padding: 2px;
+  flex-shrink: 0;
+}
+
+.switch__thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+.switch--on {
+  background: var(--color-accent);
+}
+
+.switch--on .switch__thumb {
+  transform: translateX(14px);
+}
+
 .app-layout__body {
   flex: 1;
 }

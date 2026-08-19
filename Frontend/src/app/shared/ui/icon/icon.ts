@@ -17,7 +17,29 @@ export type IconName =
   | 'calendar'
   | 'search'
   | 'eye'
-  | 'trash';
+  | 'trash'
+  | 'shield'
+  | 'building'
+  | 'bell'
+  | 'user-plus'
+  | 'swap'
+  | 'check-square'
+  | 'file-text'
+  | 'id-card'
+  | 'phone'
+  | 'key'
+  | 'briefcase'
+  | 'award'
+  | 'percent'
+  | 'gift'
+  | 'credit-card'
+  | 'route'
+  | 'home'
+  | 'box'
+  | 'mail'
+  | 'activity'
+  | 'alert-triangle'
+  | 'truck';
 
 @Component({
   selector: 'ui-icon',
