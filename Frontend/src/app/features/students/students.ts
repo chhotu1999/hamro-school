@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
-import { SharedComponent } from '../../shared/common-shared';
-import { DataGridColumn, DataGridFilter } from '../../shared/ui/data-grid/data-grid.types';
-import { injectQueryParamPage } from '../../shared/ui/pagination/query-param-page';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { SharedControls } from '../../shared/common-shared';
+import { MvGridColumn, MvGridConfig, MvGridPaging, MvGridSorting } from '../../shared/controls/mat-grid/mat-grid.model';
 
 type FeeStatus = 'Paid' | 'Pending' | 'Overdue';
 
@@ -309,60 +312,120 @@ const STUDENTS: Student[] = [
   },
 ];
 
-const GRADE_OPTIONS = ['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'].map((g) => ({
-  label: g,
-  value: g,
-}));
-const FEE_STATUS_OPTIONS: { label: string; value: string }[] = ['Paid', 'Pending', 'Overdue'].map(
-  (s) => ({
-    label: s,
-    value: s,
-  }),
-);
+const GRADE_OPTIONS = ['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'];
+const FEE_STATUS_OPTIONS: FeeStatus[] = ['Paid', 'Pending', 'Overdue'];
 
+const GRID_COLUMNS: MvGridColumn[] = [
+  { name: 'student', display: 'Student', type: 'template', sortable: true },
+  { name: 'grade', display: 'Grade', type: 'text', sortable: true },
+  { name: 'section', display: 'Section', type: 'text', sortable: true },
+  { name: 'rollNo', display: 'Roll No.', type: 'number', align: 'right', sortable: true },
+  { name: 'guardian', display: 'Guardian', type: 'text', sortable: true },
+  { name: 'attendance', display: 'Attendance', type: 'template', align: 'right', sortable: true },
+  { name: 'feeStatus', display: 'Fee status', type: 'template', sortable: true },
+  { name: 'actions', display: '', type: 'template', sortable: false },
+];
+
+/**
+ * This page has no backend yet, so `refreshGrid()` filters/sorts/paginates
+ * the in-memory mock list itself and feeds the result into `gridConfig` —
+ * the same shape a real API-backed page (see AcademicYear) would build from
+ * a server response.
+ */
 @Component({
   selector: 'app-students',
-  imports: [...SharedComponent],
+  imports: [...SharedControls, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule],
   templateUrl: './students.html',
   styleUrl: './students.less',
 })
-export class Students {
-  students = STUDENTS;
+export class Students implements OnInit {
+  private readonly allStudents = STUDENTS;
 
-  columns: DataGridColumn<Student>[] = [
-    { key: 'student', header: 'Student', sortable: true, accessor: (s) => s.name },
-    { key: 'grade', header: 'Grade', sortable: true },
-    { key: 'section', header: 'Section', sortable: true },
-    { key: 'rollNo', header: 'Roll No.', sortable: true, align: 'right' },
-    { key: 'guardian', header: 'Guardian', sortable: true },
-    { key: 'attendance', header: 'Attendance', sortable: true, align: 'right' },
-    { key: 'feeStatus', header: 'Fee status', sortable: true },
-    { key: 'actions', header: '' },
-  ];
+  gradeOptions = GRADE_OPTIONS;
+  feeStatusOptions = FEE_STATUS_OPTIONS;
 
-  filters: DataGridFilter<Student>[] = [
-    { key: 'grade', label: 'All grades', options: GRADE_OPTIONS },
-    { key: 'feeStatus', label: 'All fee status', options: FEE_STATUS_OPTIONS },
-  ];
+  gradeFilter = '';
+  feeStatusFilter = '';
 
-  searchableKeys = ['name', 'guardian', 'grade'];
+  gridConfig: MvGridConfig<Student> = {
+    columns: GRID_COLUMNS,
+    dataSource: { data: [], totalRows: 0 },
+    loading: false,
+    option: { searchText: '', offset: 0, pageSize: 8, sortBy: 'student', sortOrder: 'ASC' },
+  };
 
-  private paging = injectQueryParamPage('page');
-  page = this.paging.page;
+  ngOnInit(): void {
+    this.refreshGrid();
+  }
 
-  trackById = (student: Student): number => student.id;
+  searchChange(event: Event): void {
+    this.gridConfig.option.searchText = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.gridConfig.option.offset = 0;
+    this.refreshGrid();
+  }
 
-  onPageChange(page: number): void {
-    this.paging.setPage(page);
+  onFilterChange(): void {
+    this.gridConfig.option.offset = 0;
+    this.refreshGrid();
+  }
+
+  onPageChange(event: MvGridPaging): void {
+    this.gridConfig.option.offset = event.offset;
+    this.gridConfig.option.pageSize = event.pageSize;
+    this.refreshGrid();
+  }
+
+  onSortChange(event: MvGridSorting): void {
+    this.gridConfig.option.sortBy = event.sortBy;
+    this.gridConfig.option.sortOrder = event.sortOrder;
+    this.refreshGrid();
   }
 
   attendanceClass(attendance: number): string {
-    if (attendance == 90) return 'attendance attendance--good';
+    if (attendance >= 90) return 'attendance attendance--good';
     if (attendance >= 75) return 'attendance attendance--warn';
     return 'attendance attendance--bad';
   }
 
   feeStatusClass(status: FeeStatus): string {
     return `fee-badge fee-badge--${status.toLowerCase()}`;
+  }
+
+  private refreshGrid(): void {
+    let rows = this.allStudents;
+
+    if (this.gradeFilter) {
+      rows = rows.filter((s) => s.grade === this.gradeFilter);
+    }
+    if (this.feeStatusFilter) {
+      rows = rows.filter((s) => s.feeStatus === this.feeStatusFilter);
+    }
+
+    const term = this.gridConfig.option.searchText;
+    if (term) {
+      rows = rows.filter((s) => [s.name, s.guardian, s.grade].some((v) => v.toLowerCase().includes(term)));
+    }
+
+    rows = this.sortRows(rows);
+
+    const { offset = 0, pageSize = rows.length } = this.gridConfig.option;
+    this.gridConfig.dataSource.data = rows.slice(offset, offset + pageSize);
+    this.gridConfig.dataSource.totalRows = rows.length;
+    this.gridConfig = { ...this.gridConfig };
+  }
+
+  private sortRows(rows: Student[]): Student[] {
+    const { sortBy, sortOrder } = this.gridConfig.option;
+    if (!sortBy) return rows;
+
+    const key = sortBy === 'student' ? 'name' : (sortBy as keyof Student);
+    const dir = sortOrder === 'DESC' ? -1 : 1;
+
+    return [...rows].sort((a, b) => {
+      const av = a[key];
+      const bv = b[key];
+      if (typeof av === 'number' && typeof bv === 'number') return (av - bv) * dir;
+      return String(av).localeCompare(String(bv)) * dir;
+    });
   }
 }

@@ -1,0 +1,52 @@
+<div class="mat-grid-wrapper">
+  <div class="table-container">
+    @if (loading) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChange($event)">
+      @for (column of gridColumns; track column.name) {
+        <ng-container [matColumnDef]="column.name">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [disabled]="column.type === 'action' || column.sortable === false"
+            [style.width]="column.width"
+            [class.align-right]="column.align === 'right'"
+          >
+            {{ column.display }}
+          </th>
+          <td mat-cell *matCellDef="let row" [class.align-right]="column.align === 'right'">
+            @if (templateFor(column.name); as tpl) {
+              <ng-container *ngTemplateOutlet="tpl; context: { $implicit: row, row: row }" />
+            } @else {
+              {{ cellValue(row, column) }}
+            }
+          </td>
+        </ng-container>
+      }
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [class.selected]="row === selectedRow"
+        (click)="rowClick(row)"
+        (dblclick)="rowDblClick(row)"
+      ></tr>
+    </table>
+
+    @if (!loading && dataSource.data.length === 0) {
+      <p class="grid-no-record">No records found.</p>
+    }
+  </div>
+
+  <mat-paginator
+    [length]="gridConfig.dataSource.totalRows"
+    [pageSize]="gridConfig.option.pageSize"
+    [pageIndex]="gridConfig.option.offset / gridConfig.option.pageSize"
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    (page)="pageChange($event)"
+  />
+</div>

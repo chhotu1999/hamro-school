@@ -37,10 +37,12 @@
       <h2 class="section-title">Attendance by section</h2>
       <ui-ranked-list [items]="pagedAttendanceItems()" />
       <div class="attendance-pagination">
-        <ui-pagination
-          [page]="attendancePage()"
-          [pageCount]="attendancePageCount()"
-          (pageChange)="onAttendancePageChange($event)"
+        <mat-paginator
+          [length]="attendanceItems.length"
+          [pageSize]="3"
+          [pageIndex]="attendancePage() - 1"
+          [hidePageSize]="true"
+          (page)="onAttendancePageChange($event)"
         />
       </div>
     </ui-card>

@@ -1,14 +1,13 @@
-import { AppLayout } from '../layout/app-layout/app-layout';
-import { DataGridCellTemplate } from './ui/data-grid/cell-template.directive';
-import { DataGrid } from './ui/data-grid/data-grid';
-import { Card } from './ui/card/card';
-import { Icon } from './ui/icon/icon';
+import { AppLayoutModule } from '../layout/app-layout/app-layout.module';
+import { CardModule } from './controls/card/card.module';
+import { IconModule } from './controls/icon/icon.module';
+import { MatGridModule } from './controls/mat-grid/mat-grid.module';
 
 /**
- * Standalone-component bundle for the building blocks nearly every feature
- * page uses. Spread into a component's `imports` array instead of listing
- * each one individually: `imports: [...SharedComponent, ...pageSpecificOnes]`.
- * This file is the place to grow that shared surface later on — snackbars,
- * shared services, etc.
+ * NgModule bundle for the building blocks nearly every feature page uses.
+ * Spread into a standalone component's `imports` array instead of listing
+ * each module individually: `imports: [...SharedControls, ...pageSpecificOnes]`.
+ * A standalone component's `imports` accepts NgModules directly, so this
+ * spread pattern works the same as it did with standalone components.
  */
-export const SharedComponent = [AppLayout, Card, Icon, DataGrid, DataGridCellTemplate] as const;
+export const SharedControls = [AppLayoutModule, CardModule, IconModule, MatGridModule] as const;

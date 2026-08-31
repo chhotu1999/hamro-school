@@ -1,7 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
-import { Icon, IconName } from '../../shared/ui/icon/icon';
+import { IconName } from '../../shared/controls/icon/icon.component';
+import { IconModule } from '../../shared/controls/icon/icon.module';
 
 interface NavItem {
   label: string;
@@ -17,7 +18,7 @@ interface NavSection {
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, RouterLinkActive, Icon],
+  imports: [RouterLink, RouterLinkActive, IconModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.less',
 })

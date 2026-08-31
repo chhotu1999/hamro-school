@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SharedComponent } from '../../shared/common-shared';
-import { IconName } from '../../shared/ui/icon/icon';
+import { SharedControls } from '../../shared/common-shared';
+import { IconName } from '../../shared/controls/icon/icon.component';
 
 @Component({
   selector: 'app-placeholder',
-  imports: [...SharedComponent],
+  imports: [...SharedControls],
   templateUrl: './placeholder.html',
   styleUrl: './placeholder.less',
 })

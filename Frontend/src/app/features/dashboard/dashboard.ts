@@ -1,12 +1,15 @@
 import { Component, computed } from '@angular/core';
-import { SharedComponent } from '../../shared/common-shared';
-import { BarChart, BarSeries } from '../../shared/ui/bar-chart/bar-chart';
-import { DonutChart, DonutDatum } from '../../shared/ui/donut-chart/donut-chart';
-import { IconName } from '../../shared/ui/icon/icon';
-import { injectQueryParamPage } from '../../shared/ui/pagination/query-param-page';
-import { Pagination } from '../../shared/ui/pagination/pagination';
-import { RankedItem, RankedList } from '../../shared/ui/ranked-list/ranked-list';
-import { StatCard } from '../../shared/ui/stat-card/stat-card';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { SharedControls } from '../../shared/common-shared';
+import { BarSeries } from '../../shared/controls/bar-chart/bar-chart.component';
+import { BarChartModule } from '../../shared/controls/bar-chart/bar-chart.module';
+import { DonutDatum } from '../../shared/controls/donut-chart/donut-chart.component';
+import { DonutChartModule } from '../../shared/controls/donut-chart/donut-chart.module';
+import { IconName } from '../../shared/controls/icon/icon.component';
+import { RankedItem } from '../../shared/controls/ranked-list/ranked-list.component';
+import { RankedListModule } from '../../shared/controls/ranked-list/ranked-list.module';
+import { StatCardModule } from '../../shared/controls/stat-card/stat-card.module';
+import { injectQueryParamPage } from '../../shared/utils/query-param-page.util';
 
 interface StatCardData {
   icon: IconName;
@@ -19,7 +22,14 @@ const ATTENDANCE_PAGE_SIZE = 3;
 
 @Component({
   selector: 'app-dashboard',
-  imports: [...SharedComponent, StatCard, BarChart, DonutChart, RankedList, Pagination],
+  imports: [
+    ...SharedControls,
+    StatCardModule,
+    BarChartModule,
+    DonutChartModule,
+    RankedListModule,
+    MatPaginatorModule,
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.less',
 })
@@ -82,7 +92,7 @@ export class Dashboard {
     return this.attendanceItems.slice(start, start + ATTENDANCE_PAGE_SIZE);
   });
 
-  onAttendancePageChange(page: number): void {
-    this.attendancePaging.setPage(page);
+  onAttendancePageChange(event: PageEvent): void {
+    this.attendancePaging.setPage(event.pageIndex + 1);
   }
 }

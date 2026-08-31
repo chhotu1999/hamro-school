@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Shell } from './layout/shell/shell';
 import { Dashboard } from './features/dashboard/dashboard';
 import { Students } from './features/students/students';
+import { AcademicYear } from './features/administration/academic-year/academic-year';
 import { Placeholder } from './features/placeholder/placeholder';
 
 export const routes: Routes = [
@@ -16,7 +17,7 @@ export const routes: Routes = [
       { path: 'administration/roles-permissions', component: Placeholder, data: { title: 'Roles & Permissions', icon: 'shield' } },
       { path: 'administration/school-settings', component: Placeholder, data: { title: 'School Settings', icon: 'settings' } },
       { path: 'administration/branches', component: Placeholder, data: { title: 'Branches/Campuses', icon: 'building' } },
-      { path: 'administration/academic-year', component: Placeholder, data: { title: 'Academic Year', icon: 'calendar' } },
+      { path: 'administration/academic-year', component: AcademicYear },
       { path: 'administration/holidays', component: Placeholder, data: { title: 'Holidays', icon: 'calendar' } },
       { path: 'administration/notifications', component: Placeholder, data: { title: 'Notifications', icon: 'bell' } },
 

@@ -1,0 +1,14 @@
+<mat-form-field appearance="outline" class="mat-dropdown">
+  <mat-select
+    [placeholder]="placeholder"
+    [multiple]="multiSelect"
+    [disabled]="disabled"
+    [value]="value"
+    (selectionChange)="onSelectionChange($event.value)"
+    (blur)="onBlur()"
+  >
+    @for (item of data; track optionValue(item)) {
+      <mat-option [value]="optionValue(item)">{{ optionLabel(item) }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

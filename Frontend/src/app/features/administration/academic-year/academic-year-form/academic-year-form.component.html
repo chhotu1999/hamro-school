@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit academic year' : 'Add academic year' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="formGroup" class="academic-year-form">
+    <mat-form-field appearance="outline" class="field field--full">
+      <mat-label>Academic Year Name</mat-label>
+      <input matInput formControlName="name" placeholder="e.g. 2082/83" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
+      <mat-datepicker-toggle matSuffix [for]="startPicker" />
+      <mat-datepicker #startPicker />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
+      <mat-datepicker-toggle matSuffix [for]="endPicker" />
+      <mat-datepicker #endPicker />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>Miti Start Date (BS)</mat-label>
+      <input matInput formControlName="mitiStartDate" placeholder="YYYY-MM-DD" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>Miti End Date (BS)</mat-label>
+      <input matInput formControlName="mitiEndDate" placeholder="YYYY-MM-DD" />
+    </mat-form-field>
+  </form>
+
+  @if (errorMessage) {
+    <p class="form-error">{{ errorMessage }}</p>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-flat-button color="primary" type="button" [disabled]="saving" (click)="submitForm()">
+    {{ saving ? 'Saving…' : 'Save' }}
+  </button>
+</mat-dialog-actions>

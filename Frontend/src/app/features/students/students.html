@@ -1,46 +1,69 @@
 <app-layout title="Students">
-  <button type="button" class="add-btn" layoutActions>
-    <ui-icon name="plus" [size]="16" />
-    <span>Add student</span>
-  </button>
+  <div class="site-content">
+    <div class="site-content-header">
+      <div class="search-bar">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search</mat-label>
+          <input matInput (keydown.enter)="searchChange($event)" placeholder="Name, guardian or grade" />
+        </mat-form-field>
 
-  <ui-card>
-    <data-grid
-      [rows]="students"
-      [columns]="columns"
-      [filters]="filters"
-      [searchableKeys]="searchableKeys"
-      searchPlaceholder="Search by name, guardian or grade"
-      emptyMessage="No students match your search."
-      [initialPage]="page()"
-      [trackBy]="trackById"
-      (pageChange)="onPageChange($event)"
-    >
-      <ng-template uiCellFor="student" let-student>
-        <div class="student-cell">
-          <span class="avatar" [style.background]="student.avatarColor">{{ student.initials }}</span>
-          <span>{{ student.name }}</span>
-        </div>
-      </ng-template>
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Grade</mat-label>
+          <mat-select [(ngModel)]="gradeFilter" (selectionChange)="onFilterChange()">
+            <mat-option value="">All grades</mat-option>
+            @for (grade of gradeOptions; track grade) {
+              <mat-option [value]="grade">{{ grade }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-      <ng-template uiCellFor="attendance" let-student>
-        <span [class]="attendanceClass(student.attendance)">{{ student.attendance }}%</span>
-      </ng-template>
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Fee status</mat-label>
+          <mat-select [(ngModel)]="feeStatusFilter" (selectionChange)="onFilterChange()">
+            <mat-option value="">All fee status</mat-option>
+            @for (status of feeStatusOptions; track status) {
+              <mat-option [value]="status">{{ status }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-      <ng-template uiCellFor="feeStatus" let-student>
-        <span [class]="feeStatusClass(student.feeStatus)">{{ student.feeStatus }}</span>
-      </ng-template>
+      <div class="flex-1 toolbar-actions">
+        <button type="button" class="add-btn">
+          <ui-icon name="plus" [size]="16" />
+          <span>Add student</span>
+        </button>
+      </div>
+    </div>
 
-      <ng-template uiCellFor="actions" let-student>
-        <div class="row-actions">
-          <button type="button" class="icon-btn">
-            <ui-icon name="eye" [size]="15" />
-          </button>
-          <button type="button" class="icon-btn icon-btn--danger">
-            <ui-icon name="trash" [size]="15" />
-          </button>
-        </div>
-      </ng-template>
-    </data-grid>
-  </ui-card>
+    <ui-card>
+      <mat-grid [config]="gridConfig" (onPageChange)="onPageChange($event)" (onSortChange)="onSortChange($event)">
+        <ng-template matCellFor="student" let-student>
+          <div class="student-cell">
+            <span class="avatar" [style.background]="student.avatarColor">{{ student.initials }}</span>
+            <span>{{ student.name }}</span>
+          </div>
+        </ng-template>
+
+        <ng-template matCellFor="attendance" let-student>
+          <span [class]="attendanceClass(student.attendance)">{{ student.attendance }}%</span>
+        </ng-template>
+
+        <ng-template matCellFor="feeStatus" let-student>
+          <span [class]="feeStatusClass(student.feeStatus)">{{ student.feeStatus }}</span>
+        </ng-template>
+
+        <ng-template matCellFor="actions" let-student>
+          <div class="row-actions">
+            <button type="button" class="icon-btn">
+              <ui-icon name="eye" [size]="15" />
+            </button>
+            <button type="button" class="icon-btn icon-btn--danger">
+              <ui-icon name="trash" [size]="15" />
+            </button>
+          </div>
+        </ng-template>
+      </mat-grid>
+    </ui-card>
+  </div>
 </app-layout>

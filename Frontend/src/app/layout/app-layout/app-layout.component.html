@@ -1,0 +1,22 @@
+<div class="app-layout__header">
+  <h1 class="app-layout__title">{{ title }}</h1>
+  <div class="app-layout__actions">
+    <ng-content select="[layoutActions]" />
+    <div class="theme-toggle">
+      <ui-icon [name]="darkMode ? 'moon' : 'sun'" [size]="16" />
+      <mat-slide-toggle
+        [checked]="darkMode"
+        (change)="onDarkModeToggle($event)"
+        [aria-label]="darkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="app-layout__body">
+  <ng-content />
+</div>
+
+<div class="app-layout__footer">
+  <span>Developed by Dillegent Solution © 2022</span>
+</div>
