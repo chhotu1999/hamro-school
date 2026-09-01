@@ -1,5 +1,29 @@
 :host {
   display: block;
+
+  // Override the M3 theme's surface/on-surface tokens (which pick up a
+  // green tint from the app's primary palette) with the app's own neutral
+  // text/border colors, so the table reads as plain rows, not banded.
+  --mat-table-background-color: transparent;
+  --mat-table-header-headline-color: var(--color-text-faint);
+  --mat-table-header-headline-size: 11.5px;
+  --mat-table-header-headline-weight: 600;
+  --mat-table-header-headline-tracking: 0.04em;
+  --mat-table-header-container-height: 46px;
+  --mat-table-row-item-label-text-color: var(--color-text);
+  --mat-table-row-item-label-text-size: 13px;
+  --mat-table-row-item-container-height: 52px;
+  --mat-table-row-item-outline-color: var(--color-border);
+  --mat-table-row-item-outline-width: 1px;
+
+  --mat-paginator-container-background-color: transparent;
+  --mat-paginator-container-text-color: var(--color-text-muted);
+  --mat-paginator-enabled-icon-color: var(--color-text-muted);
+}
+
+.mat-grid-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .table-container {
@@ -12,9 +36,35 @@ table {
   width: 100%;
 }
 
+th,
+td {
+  padding: 0 16px;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+th {
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td {
+  white-space: nowrap;
+}
+
 th.align-right,
 td.align-right {
   text-align: right;
+}
+
+tr.mat-mdc-header-row {
+  background: var(--color-surface-alt);
 }
 
 tr.mat-mdc-row:hover {
@@ -22,7 +72,12 @@ tr.mat-mdc-row:hover {
   cursor: pointer;
 }
 
-tr.selected {
+tr.mat-mdc-row:last-child .mat-mdc-cell {
+  border-bottom: none;
+}
+
+tr.selected,
+tr.selected:hover {
   background: var(--color-accent-bg);
 }
 
@@ -31,4 +86,9 @@ tr.selected {
   padding: var(--space-8) 0;
   color: var(--color-text-muted);
   margin: 0;
+}
+
+mat-paginator {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-2);
 }

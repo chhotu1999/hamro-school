@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -323,7 +323,7 @@ const GRID_COLUMNS: MvGridColumn[] = [
   { name: 'guardian', display: 'Guardian', type: 'text', sortable: true },
   { name: 'attendance', display: 'Attendance', type: 'template', align: 'right', sortable: true },
   { name: 'feeStatus', display: 'Fee status', type: 'template', sortable: true },
-  { name: 'actions', display: '', type: 'template', sortable: false },
+  { name: 'actions', display: '', type: 'template', sortable: false, align: 'right', width: '96px' },
 ];
 
 /**
@@ -346,6 +346,9 @@ export class Students implements OnInit {
 
   gradeFilter = '';
   feeStatusFilter = '';
+  searchHasText = false;
+
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
   gridConfig: MvGridConfig<Student> = {
     columns: GRID_COLUMNS,
@@ -360,6 +363,18 @@ export class Students implements OnInit {
 
   searchChange(event: Event): void {
     this.gridConfig.option.searchText = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.gridConfig.option.offset = 0;
+    this.refreshGrid();
+  }
+
+  onSearchInput(event: Event): void {
+    this.searchHasText = !!(event.target as HTMLInputElement).value;
+  }
+
+  clearSearch(): void {
+    this.searchInput.nativeElement.value = '';
+    this.searchHasText = false;
+    this.gridConfig.option.searchText = '';
     this.gridConfig.option.offset = 0;
     this.refreshGrid();
   }

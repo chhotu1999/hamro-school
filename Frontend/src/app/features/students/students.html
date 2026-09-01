@@ -2,9 +2,26 @@
   <div class="site-content">
     <div class="site-content-header">
       <div class="search-bar">
-        <mat-form-field appearance="outline" class="search-field">
-          <mat-label>Search</mat-label>
-          <input matInput (keydown.enter)="searchChange($event)" placeholder="Name, guardian or grade" />
+        <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+          <ui-icon matPrefix name="search" [size]="16" />
+          <input
+            #searchInput
+            matInput
+            (keydown.enter)="searchChange($event)"
+            (input)="onSearchInput($event)"
+            placeholder="Name, guardian or grade"
+          />
+          @if (searchHasText) {
+            <button
+              type="button"
+              matSuffix
+              class="clear-search-btn"
+              (click)="clearSearch()"
+              aria-label="Clear search"
+            >
+              <ui-icon name="close" [size]="14" />
+            </button>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="filter-field">

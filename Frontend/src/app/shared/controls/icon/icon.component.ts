@@ -39,7 +39,8 @@ export type IconName =
   | 'mail'
   | 'activity'
   | 'alert-triangle'
-  | 'truck';
+  | 'truck'
+  | 'close';
 
 @Component({
   selector: 'ui-icon',
