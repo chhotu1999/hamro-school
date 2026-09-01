@@ -3,6 +3,10 @@ import { Shell } from './layout/shell/shell';
 import { Dashboard } from './features/dashboard/dashboard';
 import { Students } from './features/students/students';
 import { AcademicYear } from './features/administration/academic-year/academic-year';
+import { Staff } from './features/staff-management/staff/staff';
+import { Student } from './features/student-management/student/student';
+import { Grade } from './features/academic-management/grade/grade';
+import { GradeSection } from './features/academic-management/grade-section/grade-section';
 import { Placeholder } from './features/placeholder/placeholder';
 
 export const routes: Routes = [
@@ -21,6 +25,7 @@ export const routes: Routes = [
       { path: 'administration/holidays', component: Placeholder, data: { title: 'Holidays', icon: 'calendar' } },
       { path: 'administration/notifications', component: Placeholder, data: { title: 'Notifications', icon: 'bell' } },
 
+      { path: 'student-management/student', component: Student },
       { path: 'students/registration', component: Placeholder, data: { title: 'Student Registration', icon: 'user-plus' } },
       { path: 'students/enrollment', component: Placeholder, data: { title: 'Student Enrollment', icon: 'user-plus' } },
       { path: 'students/promotion', component: Placeholder, data: { title: 'Student Promotion', icon: 'swap' } },
@@ -34,6 +39,7 @@ export const routes: Routes = [
       { path: 'parents/emergency-contacts', component: Placeholder, data: { title: 'Emergency Contacts', icon: 'phone' } },
       { path: 'parents/login', component: Placeholder, data: { title: 'Parent Login', icon: 'key' } },
 
+      { path: 'staff-management/staff', component: Staff },
       { path: 'staff/teachers', component: Placeholder, data: { title: 'Teacher Management', icon: 'book' } },
       { path: 'staff/non-teaching', component: Placeholder, data: { title: 'Non-Teaching Staff', icon: 'briefcase' } },
       { path: 'staff/departments', component: Placeholder, data: { title: 'Departments', icon: 'briefcase' } },
@@ -41,8 +47,8 @@ export const routes: Routes = [
       { path: 'staff/attendance', component: Placeholder, data: { title: 'Staff Attendance', icon: 'check-square' } },
       { path: 'staff/payroll', component: Placeholder, data: { title: 'Payroll', icon: 'wallet' } },
 
-      { path: 'academics/classes', component: Placeholder, data: { title: 'Classes', icon: 'grid' } },
-      { path: 'academics/sections', component: Placeholder, data: { title: 'Sections', icon: 'grid' } },
+      { path: 'academics/classes', component: Grade },
+      { path: 'academics/sections', component: GradeSection },
       { path: 'academics/subjects', component: Placeholder, data: { title: 'Subjects', icon: 'book' } },
       { path: 'academics/subject-groups', component: Placeholder, data: { title: 'Subject Groups', icon: 'book' } },
       { path: 'academics/teacher-assignment', component: Placeholder, data: { title: 'Teacher Subject Assignment', icon: 'users' } },

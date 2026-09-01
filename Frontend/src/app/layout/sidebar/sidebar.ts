@@ -51,6 +51,7 @@ export class Sidebar {
       title: 'Student Management',
       icon: 'user-plus',
       items: [
+        { label: 'Student Directory', icon: 'user-plus', link: '/student-management/student' },
         { label: 'Student Registration', icon: 'user-plus', link: '/students/registration' },
         { label: 'Student Enrollment', icon: 'user-plus', link: '/students/enrollment' },
         { label: 'Student Promotion', icon: 'swap', link: '/students/promotion' },
@@ -74,6 +75,7 @@ export class Sidebar {
       title: 'Staff Management',
       icon: 'briefcase',
       items: [
+        { label: 'Staff Directory', icon: 'briefcase', link: '/staff-management/staff' },
         { label: 'Teacher Management', icon: 'book', link: '/staff/teachers' },
         { label: 'Non-Teaching Staff', icon: 'briefcase', link: '/staff/non-teaching' },
         { label: 'Departments', icon: 'briefcase', link: '/staff/departments' },

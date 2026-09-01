@@ -1,0 +1,44 @@
+<app-layout title="Sections">
+  <div class="site-content">
+    <div class="site-content-header">
+      <div class="search-bar">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search</mat-label>
+          <input
+            matInput
+            (keydown.enter)="searchChange($event)"
+            placeholder="Search by section name"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="flex-1 toolbar-actions">
+        <button type="button" class="add-btn" (click)="addNew()">
+          <ui-icon name="plus" [size]="16" />
+          <span>Add section</span>
+        </button>
+      </div>
+    </div>
+
+    <ui-card>
+      <mat-grid
+        [config]="gridConfig"
+        (onRowActionClick)="onRowActionClick($event)"
+        (onRowDblClick)="onRowDblClick($event)"
+        (onPageChange)="onPageChange($event)"
+        (onSortChange)="onSortChange($event)"
+      >
+        <ng-template matCellFor="actions" let-section>
+          <div class="row-actions">
+            <button type="button" class="icon-btn" (click)="viewGradeSection(section)">
+              <ui-icon name="eye" [size]="15" />
+            </button>
+            <button type="button" class="icon-btn icon-btn--danger">
+              <ui-icon name="trash" [size]="15" />
+            </button>
+          </div>
+        </ng-template>
+      </mat-grid>
+    </ui-card>
+  </div>
+</app-layout>
