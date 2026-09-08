@@ -65,13 +65,13 @@
 
   <div class="sidebar__footer">
     <div class="user-card">
-      <div class="avatar">HN</div>
+      <div class="avatar">{{ userInitials() }}</div>
       @if (!collapsed()) {
         <div class="user-card__info">
-          <span class="user-card__name">Harper Nelson</span>
-          <span class="user-card__role">Admin Manager</span>
+          <span class="user-card__name">{{ currentUser()?.username ?? 'Guest' }}</span>
+          <span class="user-card__role">{{ currentUser()?.roleDisplayName ?? 'Signed out' }}</span>
         </div>
-        <button type="button" class="logout-btn" aria-label="Log out">
+        <button type="button" class="logout-btn" aria-label="Log out" (click)="logout()">
           <ui-icon name="logout" [size]="16" />
         </button>
       }

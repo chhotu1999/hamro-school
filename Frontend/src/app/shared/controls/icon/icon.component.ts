@@ -40,7 +40,12 @@ export type IconName =
   | 'activity'
   | 'alert-triangle'
   | 'truck'
-  | 'close';
+  | 'close'
+  | 'graduation-cap'
+  | 'menu'
+  | 'arrow-right'
+  | 'user'
+  | 'lock';
 
 @Component({
   selector: 'ui-icon',

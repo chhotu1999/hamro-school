@@ -8,11 +8,17 @@ import { Student } from './features/student-management/student/student';
 import { Grade } from './features/academic-management/grade/grade';
 import { GradeSection } from './features/academic-management/grade-section/grade-section';
 import { Placeholder } from './features/placeholder/placeholder';
+import { Home } from './features/home/home';
+import { Login } from './features/auth/login/login';
+import { authGuard, guestGuard } from './core/auth/auth.guard';
 
 export const routes: Routes = [
+  { path: '', component: Home },
+  { path: 'login', component: Login, canActivate: [guestGuard] },
   {
-    path: '',
+    path: 'app',
     component: Shell,
+    canActivate: [authGuard],
     children: [
       { path: '', component: Dashboard },
       { path: 'students', component: Students },

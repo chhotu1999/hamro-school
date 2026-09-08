@@ -1,0 +1,154 @@
+<header class="navbar">
+  <div class="navbar__inner">
+    <a class="navbar__brand" routerLink="/" (click)="closeMenu()">
+      <span class="navbar__logo"><ui-icon name="graduation-cap" [size]="20" /></span>
+      <span>HamroSchool</span>
+    </a>
+
+    <nav class="navbar__links" [class.navbar__links--open]="menuOpen()">
+      @for (link of navLinks; track link.fragment) {
+        <a [routerLink]="['/']" [fragment]="link.fragment" (click)="closeMenu()">{{ link.label }}</a>
+      }
+      <a class="navbar__login navbar__login--mobile" routerLink="/login" (click)="closeMenu()">
+        Login
+        <ui-icon name="arrow-right" [size]="15" />
+      </a>
+    </nav>
+
+    <div class="navbar__actions">
+      <a class="navbar__login" routerLink="/login">
+        Login
+        <ui-icon name="arrow-right" [size]="15" />
+      </a>
+      <button type="button" class="navbar__toggle" aria-label="Toggle menu" (click)="toggleMenu()">
+        <ui-icon [name]="menuOpen() ? 'close' : 'menu'" [size]="20" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="home">
+  <section class="hero">
+    <div class="hero__content">
+      <span class="hero__eyebrow">Welcome to HamroSchool</span>
+      <h1 class="hero__title">Nurturing bright futures, one student at a time</h1>
+      <p class="hero__subtitle">
+        A complete K-12 learning environment that combines strong academics, modern facilities and a
+        caring community &mdash; helping every child discover what they are capable of.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" routerLink="/login">
+          Login to Portal
+          <ui-icon name="arrow-right" [size]="16" />
+        </a>
+        <a class="btn btn--ghost" [routerLink]="['/']" fragment="about">Learn more</a>
+      </div>
+    </div>
+
+    <div class="hero__stats">
+      @for (stat of stats; track stat.label) {
+        <div class="hero__stat">
+          <span class="hero__stat-value">{{ stat.value }}</span>
+          <span class="hero__stat-label">{{ stat.label }}</span>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="section__header">
+      <span class="section__eyebrow">About Us</span>
+      <h2 class="section__title">A community built around every learner</h2>
+      <p class="section__subtitle">
+        For over two decades HamroSchool has offered a balanced education &mdash; pairing academic rigor
+        with the arts, sports and values that shape well-rounded, confident individuals.
+      </p>
+    </div>
+  </section>
+
+  <section id="programs" class="section section--alt">
+    <div class="section__header">
+      <span class="section__eyebrow">Programs</span>
+      <h2 class="section__title">Everything your child needs to thrive</h2>
+    </div>
+
+    <div class="highlight-grid">
+      @for (item of highlights; track item.title) {
+        <ui-card>
+          <div class="highlight-card">
+            <span class="highlight-card__icon"><ui-icon [name]="item.icon" [size]="22" /></span>
+            <h3 class="highlight-card__title">{{ item.title }}</h3>
+            <p class="highlight-card__description">{{ item.description }}</p>
+          </div>
+        </ui-card>
+      }
+    </div>
+  </section>
+
+  <section id="why-us" class="section">
+    <div class="why-us">
+      <div class="why-us__copy">
+        <span class="section__eyebrow">Why HamroSchool</span>
+        <h2 class="section__title">Designed for real, measurable growth</h2>
+        <p class="section__subtitle">
+          From admission to graduation, our staff and systems stay focused on one thing &mdash; helping
+          every student make consistent, visible progress.
+        </p>
+        <a class="btn btn--primary" routerLink="/login">
+          Access the School Portal
+          <ui-icon name="arrow-right" [size]="16" />
+        </a>
+      </div>
+
+      <ul class="why-us__list">
+        @for (point of whyUs; track point) {
+          <li>
+            <ui-icon name="check-square" [size]="18" />
+            <span>{{ point }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="section section--alt">
+    <div class="section__header">
+      <span class="section__eyebrow">Contact</span>
+      <h2 class="section__title">Get in touch</h2>
+    </div>
+
+    <div class="contact-grid">
+      <ui-card>
+        <div class="contact-card">
+          <ui-icon name="building" [size]="20" />
+          <h3>Visit Us</h3>
+          <p>Bagbazar, Kathmandu, Nepal</p>
+        </div>
+      </ui-card>
+      <ui-card>
+        <div class="contact-card">
+          <ui-icon name="phone" [size]="20" />
+          <h3>Call Us</h3>
+          <p>+977 1-4XXXXXX</p>
+        </div>
+      </ui-card>
+      <ui-card>
+        <div class="contact-card">
+          <ui-icon name="mail" [size]="20" />
+          <h3>Email Us</h3>
+          <p>info&#64;hamroschool.edu.np</p>
+        </div>
+      </ui-card>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <span class="navbar__logo"><ui-icon name="graduation-cap" [size]="18" /></span>
+      <span>HamroSchool</span>
+    </div>
+    <span class="footer__copy">&copy; 2026 HamroSchool. All rights reserved.</span>
+  </div>
+</footer>
