@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+.site-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.site-content-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.search-field {
+  width: 300px;
+}
+
+.status-badge {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.status-badge--active {
+  background: var(--color-accent-bg);
+  color: var(--color-accent);
+}
+
+.status-badge--inactive {
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+}
+
+.status-badge--locked {
+  background: var(--color-negative-bg);
+  color: var(--color-negative);
+}
+
+.status-badge--unlocked {
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+}

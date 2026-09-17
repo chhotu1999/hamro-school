@@ -3,6 +3,7 @@ import { Shell } from './layout/shell/shell';
 import { Dashboard } from './features/dashboard/dashboard';
 import { Students } from './features/students/students';
 import { AcademicYear } from './features/administration/academic-year/academic-year';
+import { Users } from './features/administration/users/users';
 import { Staff } from './features/staff-management/staff/staff';
 import { Student } from './features/student-management/student/student';
 import { Grade } from './features/academic-management/grade/grade';
@@ -23,7 +24,7 @@ export const routes: Routes = [
       { path: '', component: Dashboard },
       { path: 'students', component: Students },
 
-      { path: 'administration/users', component: Placeholder, data: { title: 'User & Authentication', icon: 'key' } },
+      { path: 'administration/users', component: Users },
       { path: 'administration/roles-permissions', component: Placeholder, data: { title: 'Roles & Permissions', icon: 'shield' } },
       { path: 'administration/school-settings', component: Placeholder, data: { title: 'School Settings', icon: 'settings' } },
       { path: 'administration/branches', component: Placeholder, data: { title: 'Branches/Campuses', icon: 'building' } },

@@ -11,6 +11,7 @@ import {
   MvAcademicYearList,
   MvParamAcademicYearFilter,
 } from './models/academic-year.model';
+import { MvParamUserFilter, MvUser } from './models/user.model';
 
 /**
  * Data access for the Administration module's API controllers
@@ -20,6 +21,7 @@ import {
 export class AdministrationService {
   private readonly http = inject(HttpClient);
   private readonly academicYearUrl = `${environment.apiBaseUrl}/AcademicYear`;
+  private readonly userUrl = `${environment.apiBaseUrl}/User`;
 
   /** GET AcademicYear/AcademicYear — paged grid list. */
   getAcademicYear(
@@ -51,5 +53,14 @@ export class AdministrationService {
       `${this.academicYearUrl}/AcademicYearTsk`,
       payload,
     );
+  }
+
+  /** GET User/UserGrid — paged grid list. */
+  getUsers(
+    params: MvParamReqOption<MvParamUserFilter>,
+  ): Observable<MvResponse<MvGridConfig<MvUser>>> {
+    return this.http.get<MvResponse<MvGridConfig<MvUser>>>(`${this.userUrl}/UserGrid`, {
+      params: toHttpParams(params),
+    });
   }
 }

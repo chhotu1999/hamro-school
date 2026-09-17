@@ -1,3 +1,17 @@
+<div class="utility-bar">
+  <div class="utility-bar__inner">
+    <div class="utility-bar__links">
+      <a routerLink="/login">For Students</a>
+      <a routerLink="/login">For Parents</a>
+      <a [routerLink]="['/']" fragment="contact">Contact</a>
+    </div>
+    <button type="button" class="utility-bar__search" aria-label="Search">
+      <ui-icon name="search" [size]="14" />
+      <span>Search</span>
+    </button>
+  </div>
+</div>
+
 <header class="navbar">
   <div class="navbar__inner">
     <a class="navbar__brand" routerLink="/" (click)="closeMenu()">
@@ -29,7 +43,8 @@
 
 <main class="home">
   <section class="hero">
-    <div class="hero__content">
+    <div class="hero__media" aria-hidden="true"></div>
+    <div class="hero__inner">
       <span class="hero__eyebrow">Welcome to HamroSchool</span>
       <h1 class="hero__title">Nurturing bright futures, one student at a time</h1>
       <p class="hero__subtitle">
@@ -41,28 +56,50 @@
           Login to Portal
           <ui-icon name="arrow-right" [size]="16" />
         </a>
-        <a class="btn btn--ghost" [routerLink]="['/']" fragment="about">Learn more</a>
+        <a class="btn btn--outline" [routerLink]="['/']" fragment="about">Learn more</a>
       </div>
     </div>
 
-    <div class="hero__stats">
-      @for (stat of stats; track stat.label) {
-        <div class="hero__stat">
-          <span class="hero__stat-value">{{ stat.value }}</span>
-          <span class="hero__stat-label">{{ stat.label }}</span>
-        </div>
+    <div class="quick-actions">
+      @for (item of quickActions; track item.title) {
+        <a
+          class="quick-action"
+          [routerLink]="item.route ? [item.route] : ['/']"
+          [fragment]="item.fragment"
+        >
+          <span class="quick-action__icon"><ui-icon [name]="item.icon" [size]="20" /></span>
+          <span class="quick-action__title">{{ item.title }}</span>
+          <span class="quick-action__description">{{ item.description }}</span>
+          <ui-icon class="quick-action__arrow" name="arrow-right" [size]="14" />
+        </a>
       }
     </div>
   </section>
 
   <section id="about" class="section">
-    <div class="section__header">
-      <span class="section__eyebrow">About Us</span>
-      <h2 class="section__title">A community built around every learner</h2>
-      <p class="section__subtitle">
-        For over two decades HamroSchool has offered a balanced education &mdash; pairing academic rigor
-        with the arts, sports and values that shape well-rounded, confident individuals.
-      </p>
+    <div class="about">
+      <div class="about__media" aria-hidden="true">
+        <span class="about__badge">
+          <strong>25</strong>
+          <small>Years of Excellence</small>
+        </span>
+      </div>
+      <div class="about__copy">
+        <span class="section__eyebrow">About Us</span>
+        <h2 class="section__title">A community built around every learner</h2>
+        <p class="section__subtitle">
+          For over two decades HamroSchool has offered a balanced education &mdash; pairing academic rigor
+          with the arts, sports and values that shape well-rounded, confident individuals.
+        </p>
+        <ul class="about__stats">
+          @for (stat of stats; track stat.label) {
+            <li>
+              <span class="about__stat-value">{{ stat.value }}</span>
+              <span class="about__stat-label">{{ stat.label }}</span>
+            </li>
+          }
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -76,9 +113,13 @@
       @for (item of highlights; track item.title) {
         <ui-card>
           <div class="highlight-card">
-            <span class="highlight-card__icon"><ui-icon [name]="item.icon" [size]="22" /></span>
-            <h3 class="highlight-card__title">{{ item.title }}</h3>
-            <p class="highlight-card__description">{{ item.description }}</p>
+            <span class="highlight-card__banner" aria-hidden="true">
+              <ui-icon [name]="item.icon" [size]="26" />
+            </span>
+            <div class="highlight-card__body">
+              <h3 class="highlight-card__title">{{ item.title }}</h3>
+              <p class="highlight-card__description">{{ item.description }}</p>
+            </div>
           </div>
         </ui-card>
       }
@@ -111,7 +152,23 @@
     </div>
   </section>
 
-  <section id="contact" class="section section--alt">
+  <section id="campus-life" class="section section--alt">
+    <div class="section__header">
+      <span class="section__eyebrow">Campus Life</span>
+      <h2 class="section__title">Moments from around our school</h2>
+    </div>
+
+    <div class="gallery-grid">
+      @for (item of galleryItems; track item.title; let i = $index) {
+        <div class="gallery-card" [class]="'gallery-card--' + (i % 4)">
+          <span class="gallery-card__tag">{{ item.tag }}</span>
+          <span class="gallery-card__title">{{ item.title }}</span>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section id="contact" class="section">
     <div class="section__header">
       <span class="section__eyebrow">Contact</span>
       <h2 class="section__title">Get in touch</h2>
@@ -145,10 +202,34 @@
 
 <footer class="footer">
   <div class="footer__inner">
-    <div class="footer__brand">
-      <span class="navbar__logo"><ui-icon name="graduation-cap" [size]="18" /></span>
-      <span>HamroSchool</span>
+    <div class="footer__col footer__col--brand">
+      <div class="footer__brand">
+        <span class="navbar__logo"><ui-icon name="graduation-cap" [size]="18" /></span>
+        <span>HamroSchool</span>
+      </div>
+      <p class="footer__tagline">Nurturing bright futures, one student at a time.</p>
     </div>
-    <span class="footer__copy">&copy; 2026 HamroSchool. All rights reserved.</span>
+
+    <div class="footer__col">
+      <h4>Quick Links</h4>
+      @for (link of navLinks; track link.fragment) {
+        <a [routerLink]="['/']" [fragment]="link.fragment">{{ link.label }}</a>
+      }
+    </div>
+
+    <div class="footer__col">
+      <h4>Contact</h4>
+      <span>Bagbazar, Kathmandu, Nepal</span>
+      <span>+977 1-4XXXXXX</span>
+      <span>info&#64;hamroschool.edu.np</span>
+    </div>
+
+    <div class="footer__col">
+      <h4>Portal</h4>
+      <a routerLink="/login">Student &amp; Staff Login</a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>&copy; 2026 HamroSchool. All rights reserved.</span>
   </div>
 </footer>

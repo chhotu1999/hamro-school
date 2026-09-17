@@ -1,0 +1,28 @@
+<app-layout title="User & Authentication">
+  <div class="site-content">
+    <div class="site-content-header">
+      <div class="search-bar">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search</mat-label>
+          <input matInput (keydown.enter)="searchChange($event)" placeholder="Search by username" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <ui-card>
+      <mat-grid [config]="gridConfig" (onPageChange)="onPageChange($event)" (onSortChange)="onSortChange($event)">
+        <ng-template matCellFor="isActive" let-user>
+          <span class="status-badge" [class.status-badge--active]="user.isActive" [class.status-badge--inactive]="!user.isActive">
+            {{ user.isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </ng-template>
+
+        <ng-template matCellFor="isLocked" let-user>
+          <span class="status-badge" [class.status-badge--locked]="user.isLocked" [class.status-badge--unlocked]="!user.isLocked">
+            {{ user.isLocked ? 'Locked' : 'Unlocked' }}
+          </span>
+        </ng-template>
+      </mat-grid>
+    </ui-card>
+  </div>
+</app-layout>

@@ -20,6 +20,19 @@ interface NavLink {
   fragment: string;
 }
 
+interface QuickAction {
+  icon: IconName;
+  title: string;
+  description: string;
+  fragment?: string;
+  route?: string;
+}
+
+interface GalleryItem {
+  tag: string;
+  title: string;
+}
+
 @Component({
   selector: 'app-home',
   imports: [RouterLink, IconModule, CardModule],
@@ -32,6 +45,40 @@ export class Home {
     { label: 'Programs', fragment: 'programs' },
     { label: 'Why Us', fragment: 'why-us' },
     { label: 'Contact', fragment: 'contact' },
+  ];
+
+  readonly quickActions: QuickAction[] = [
+    {
+      icon: 'file-text',
+      title: 'Admissions',
+      description: 'Start your child’s application for the upcoming academic year.',
+      fragment: 'about',
+    },
+    {
+      icon: 'book',
+      title: 'Academic Programs',
+      description: 'Explore our curriculum from early years through grade 12.',
+      fragment: 'programs',
+    },
+    {
+      icon: 'award',
+      title: 'Campus Life',
+      description: 'Sports, arts and clubs that build confidence beyond class.',
+      fragment: 'campus-life',
+    },
+    {
+      icon: 'lock',
+      title: 'Student Portal',
+      description: 'Login for grades, attendance and school announcements.',
+      route: '/login',
+    },
+  ];
+
+  readonly galleryItems: GalleryItem[] = [
+    { tag: 'Academics', title: 'Science & Innovation Fair' },
+    { tag: 'Athletics', title: 'Inter-House Sports Week' },
+    { tag: 'Arts & Culture', title: 'Annual Cultural Showcase' },
+    { tag: 'Community', title: 'Community Service Day' },
   ];
 
   readonly stats: StatItem[] = [
